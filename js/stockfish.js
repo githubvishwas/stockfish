@@ -150,7 +150,6 @@
 				console.log("score eval==");
                 console.log("==" + line);
 				console.log(line.split(/\b\s+/))
-                bestmove = line.substr(9,4)
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
                 done = true;
@@ -182,7 +181,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html(bestmove);
+                statusEl.html("Best move is: " + bestmove);
                 //cal_done()
             }
         };
