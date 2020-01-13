@@ -127,8 +127,8 @@
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
                 done = true;
-                console.log("bestmove==");
-                console.log("==" + line);
+                //console.log("bestmove==");
+                //console.log("==" + line);
                 bestmove = line.substr(9,4)
 				best_computer_move = bestmove
                 /// All "go" needs is the last line (use stream to get more)
@@ -158,7 +158,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 if (line.substr(0, 8) === "bestmove") {
-					statusEl.html("Ver 14 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+					statusEl.html(statusEl.innerHTML + "Ver 16 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
 					nextCal();
 				} else {
 					statusEl.html("Calculating, please wait...");
@@ -229,6 +229,8 @@
     function nextCal()
 	{
 		console.log("calculation complete!")
+		evaler.stop = true;
+        return evaler.send("stop");
 		evaler.send("position fen r2qkbnr/pb1p1ppp/1pn1p3/1B2P3/8/2Q2N2/PPP2PPP/RNB1K2R b KQkq - 0 1");
         evaler.send("go depth 10");
 	}
