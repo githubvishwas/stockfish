@@ -118,7 +118,7 @@
             }
             
             que_num = determine_que_num(line, que);
-            
+            console.log("*** Queue num: " + que_num)
             my_que = que[que_num];
             
             if (!my_que) {
@@ -179,7 +179,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 3 Best move is: " + bestmove);
+                statusEl.html("Ver 4 Best move is: " + bestmove);
                 //cal_done()
             }
         };
