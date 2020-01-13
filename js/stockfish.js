@@ -146,6 +146,11 @@
                 /// isready
                 done = true;
                 engine.ready = true;
+			} else if (line.substr(0, 8) === "depth 10") {
+				console.log("score eval==");
+                console.log("==" + line);
+				console.log(line.split(/\b\s+/))
+                bestmove = line.substr(9,4)
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
                 done = true;
