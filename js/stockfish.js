@@ -118,7 +118,7 @@
                 /// isready
                 done = true;
                 engine.ready = true;
-			} else if (line.substr(0, 13) === "info depth 10") {
+			} else if (line.substr(0, 13) === "info depth 20") {
 				console.log("*** Computer eval score: " + line.split(/\b\s+/)[9]/100.0);
 				current_comp_score = line.split(/\b\s+/)[9]/100.0
             } else if (line.substr(0, 8) === "bestmove") {
@@ -153,7 +153,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 7 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+                statusEl.html("Ver 8 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
                 //cal_done()
             }
         };
@@ -226,7 +226,7 @@
             {
                 
                 evaler.send("position fen 1rb1kbr1/pppp1p1p/4p1p1/7q/6Q1/8/PPPPP2P/RNBK3R w - -");
-                evaler.send("go depth 10");
+                evaler.send("go depth 20");
             });
         });
     }
