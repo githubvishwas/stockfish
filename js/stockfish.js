@@ -6,7 +6,7 @@
     
 	var current_comp_score = 0.0
 	var best_computer_move = ""
-    var debugging = true;
+    var debugging = false;
 
     var statusEl = $('#status');
     statusEl.html("Calculation Started...");	
@@ -76,7 +76,10 @@
                 que_num = 0,
                 bestmove = "",
                 my_que;
-            console.log("onmessage: " + line);
+			if(debugging) {
+				console.log("onmessage: " + line);
+			}
+            
 
             /// Stream everything to this, even invalid lines.
             if (engine.stream) {
@@ -154,8 +157,11 @@
                 
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
-                
-                statusEl.html("Ver 10 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+                if (line.substr(0, 8) === "bestmove") {
+					statusEl.html("Ver 11 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+				} else {
+					statusEl.html("Calculating, please wait...");
+				}
                 //cal_done()
             }
         };
