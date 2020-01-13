@@ -1,42 +1,12 @@
 (function ()
 {
     "use strict";
-    
-    var board_el = G.cde("div");
-    var board = BOARD(board_el);
-    var zobrist_keys;
-    var stalemate_by_rules;
+
     var evaler;
-    var loading_el;
-    var player1_el = G.cde("div", {c: "player player_white player_left"});
-    var player2_el = G.cde("div", {c: "player player_black player_right"});
-    var center_el  = G.cde("div", {c: "center_el"});
-    var rating_slider;
-    var new_game_el;
-    var setup_game_el;
-    var game_info_text;
-    var starting_new_game;
-    var retry_move_timer;
-    var clock_manager;
-    var pieces_moved;
-    var startpos;
+    
+
     var debugging = true;
-    var legal_move_engine;
-    var cur_pos_cmd;
-    var game_history;
-    var eval_depth = 12;
-    var rating_font_style = "Impact,monospace,mono,sans-serif";
-    var font_fit = FONT_FIT({fontFamily: rating_font_style});
-    var moves_manager;
-    var layout = {};
-    var default_sd_time = "15:00";
-    var showing_loading;
-    var gameType = "standard";
-    var lastGameType;
-    var answers;
-    var currentMovePath;
-    var latest_best_move;
-    var latst_eval_score;
+
     var statusEl = $('#status');
     statusEl.html("Calculation Started...");	
     function error(str)
@@ -125,8 +95,7 @@
             if (!my_que) {
                 return;
             }
-			console.log("*** Computer eval score1: " + line.substr(0, 5));
-            console.log("*** Computer eval score2: " + line.split(/\b\s+/));
+			
             if (my_que.stream) {
                 my_que.stream(line);
             }
@@ -148,8 +117,8 @@
                 /// isready
                 done = true;
                 engine.ready = true;
-			} else if (line.substr(0, 5) === "depth") {
-				console.log("*** Computer eval score: " + line.split(/\b\s+/));
+			} else if (line.substr(0, 13) === "info depth 10") {
+				console.log("*** Computer eval score: " + line.split(/\b\s+/)[9]/100.0);
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
                 done = true;
@@ -181,7 +150,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 5 Best move is: " + bestmove);
+                statusEl.html("Ver 6 Best move is: " + bestmove);
                 //cal_done()
             }
         };
