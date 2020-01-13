@@ -181,7 +181,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 4 Best move is: " + bestmove);
+                statusEl.html("Ver 5 Best move is: " + bestmove);
                 //cal_done()
             }
         };
