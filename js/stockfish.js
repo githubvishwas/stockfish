@@ -242,17 +242,17 @@
     function init()
     {
         
-        alert("new init1")
+        alert("new init2")
         evaler = load_engine();
-        alert("loaded1")
+        alert("loaded2")
         evaler.send("uci", function onuci(str)
         {
-			alert("uci1")
+			alert("uci2")
             evaler.send("isready", function onready()
             {
-                alert("isready1")
+                alert("isready2")
                 evaler.send("position fen 1rb1kbr1/pppp1p1p/4p1p1/7q/6Q1/8/PPPPP2P/RNBK3R w - -");
-                evaler.send("go depth 10",onengine_move1);
+                evaler.send("go depth 10");
             });
         });
     }
