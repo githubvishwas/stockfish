@@ -179,7 +179,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Best move is: " + bestmove);
+                statusEl.html("Ver 3 Best move is: " + bestmove);
                 //cal_done()
             }
         };
@@ -243,8 +243,6 @@
    
     function init()
     {
-        
-        console.log("version 3 started")
         evaler = load_engine();
         
         evaler.send("uci", function onuci(str)
