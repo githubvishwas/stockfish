@@ -26,7 +26,7 @@
         
         function get_first_word(line)
         {
-			console.log("get_first_word")
+			//console.log("get_first_word")
             var space_index = line.indexOf(" ");
             
             /// If there are no spaces, send the whole line.
@@ -122,7 +122,7 @@
                 done = true;
                 engine.ready = true;
 			} else if (line.substr(0, 13) === "info depth 20") {
-				console.log("*** Computer eval score: " + line.split(/\b\s+/)[9]/100.0);
+				//console.log("*** Computer eval score: " + line.split(/\b\s+/)[9]/100.0);
 				current_comp_score = line.split(/\b\s+/)[9]/100.0
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
@@ -158,7 +158,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 if (line.substr(0, 8) === "bestmove") {
-					statusEl.html("Ver 11 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+					statusEl.html("Ver 12 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
 				} else {
 					statusEl.html("Calculating, please wait...");
 				}
@@ -198,7 +198,7 @@
         
         engine.stop_moves = function stop_moves()
         {
-			console.log("stop moves")
+			//console.log("stop moves")
             var i,
                 len = que.length;
             
