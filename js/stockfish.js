@@ -242,15 +242,15 @@
     function init()
     {
         
-        alert("new init")
+        alert("new init1")
         evaler = load_engine();
-        alert("loaded")
+        alert("loaded1")
         evaler.send("uci", function onuci(str)
         {
-			alert("uci")
+			alert("uci1")
             evaler.send("isready", function onready()
             {
-                alert("isready")
+                alert("isready1")
                 evaler.send("position fen 1rb1kbr1/pppp1p1p/4p1p1/7q/6Q1/8/PPPPP2P/RNBK3R w - -");
                 evaler.send("go depth 10",onengine_move1);
             });
