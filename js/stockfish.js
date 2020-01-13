@@ -106,7 +106,10 @@
                 bestmove = "",
                 my_que;
             console.log("onmessage: " + line);
-            
+            if (line.substr(0, 8) === "depth 10") {
+
+				console.log("Computer eval score: " + line.split(/\b\s+/))
+			}
             /// Stream everything to this, even invalid lines.
             if (engine.stream) {
                 engine.stream(line);
@@ -246,7 +249,7 @@
     function init()
     {
         
-        console.log("version 1 started")
+        console.log("version 2 started")
         evaler = load_engine();
         
         evaler.send("uci", function onuci(str)
