@@ -55,7 +55,6 @@
         
         function get_first_word(line)
         {
-			console.log("get_first_word")
             var space_index = line.indexOf(" ");
             
             /// If there are no spaces, send the whole line.
@@ -67,7 +66,6 @@
         
         function determine_que_num(line, que)
         {
-			console.log("determine_que_num")
             var cmd_type,
                 first_word = get_first_word(line),
                 cmd_first_word,
@@ -105,7 +103,7 @@
                 que_num = 0,
                 bestmove = "",
                 my_que;
-            console.log("onmessage + "line);
+            console.log(line);
             
             /// Stream everything to this, even invalid lines.
             if (engine.stream) {
@@ -184,7 +182,6 @@
         
         engine.send = function send(cmd, cb, stream)
         {
-			console.log("engine send")
             cmd = String(cmd).trim();
             
             /// Can't quit. This is a browser.
@@ -211,7 +208,6 @@
         
         engine.stop_moves = function stop_moves()
         {
-			console.log("stop moves")
             var i,
                 len = que.length;
             
@@ -229,7 +225,6 @@
         
         engine.get_cue_len = function get_cue_len()
         {
-			console.log("get_cue_len")
             return que.length;
         }
         
@@ -1894,9 +1889,56 @@
             });
         });
     }
+    function init_bak()
+    {
+        if (typeof Worker === "undefined") {
+            return alert("Sorry, Kingdom does not support this browser.");
+        }
+        
+        create_table();
+        
+        document.body.appendChild(layout.table);
+        
+        layout.rows[1].cells[1].align = "center";
+        layout.center_cells[1].appendChild(board_el);
+        
+        clock_manager = make_clocks();
+        
+        rating_slider = make_rating_slider();
+        
+        window.addEventListener("resize", onresize);
+        
+        show_loading();
+        
+        create_players();
+        
+        create_center();
+        
+        moves_manager = make_moves_el(layout.rows[1].cells[2], layout.rows[1].cells[2]);
+        
+        onresize();
+        
+        board.onmove = on_human_move;
+        
+        evaler = load_engine();
+        
+        evaler.send("uci", function onuci(str)
+        {
+            evaler.send("isready", function onready()
+            {
+                if (board.get_mode() === "wait") {
+                    start_new();
+                }
+            });
+        });
+    }
     
-    
-    
+    window.addEventListener("keydown", function catch_key(e)
+    {
+        if (e.keyCode === 113) { /// F2
+            start_new();
+        }
+    });
     
     G.events.attach("move", function onmove(e)
     {
