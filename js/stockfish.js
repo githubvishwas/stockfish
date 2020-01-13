@@ -246,15 +246,15 @@
     function init()
     {
         
-        alert("new init2")
+        console.log("version 1 started")
         evaler = load_engine();
-        alert("loaded2")
+        
         evaler.send("uci", function onuci(str)
         {
-			alert("uci2")
+			
             evaler.send("isready", function onready()
             {
-                alert("isready2")
+                
                 evaler.send("position fen 1rb1kbr1/pppp1p1p/4p1p1/7q/6Q1/8/PPPPP2P/RNBK3R w - -");
                 evaler.send("go depth 10");
             });
