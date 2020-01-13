@@ -153,7 +153,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 8 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+                statusEl.html("Ver 9 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
                 //cal_done()
             }
         };
@@ -177,6 +177,9 @@
             ///NOTE: setoption may or may not print a statement.
             if (cmd !== "ucinewgame" && cmd !== "flip" && cmd !== "stop" && cmd !== "ponderhit" && cmd.substr(0, 8) !== "position"  && cmd.substr(0, 9) !== "setoption") {
                 que[que.length] = {
+					console.log("cmd: " + cmd)
+					console.log("cb: " + cb)
+					console.log("stram: " + stream)
                     cmd: cmd,
                     cb: cb,
                     stream: stream
