@@ -38,7 +38,7 @@
         
         function determine_que_num(line, que)
         {
-			console.log("determine_que_num")
+			//console.log("determine_que_num")
             var cmd_type,
                 first_word = get_first_word(line),
                 cmd_first_word,
@@ -158,7 +158,8 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 if (line.substr(0, 8) === "bestmove") {
-					statusEl.html("Ver 13 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+					statusEl.html("Ver 14 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+					nextCal();
 				} else {
 					statusEl.html("Calculating, please wait...");
 				}
@@ -168,7 +169,7 @@
         
         engine.send = function send(cmd, cb, stream)
         {
-			console.log("engine send")
+			//console.log("engine send")
             cmd = String(cmd).trim();
             
             /// Can't quit. This is a browser.
@@ -184,9 +185,9 @@
             /// Only add a que for commands that always print.
             ///NOTE: setoption may or may not print a statement.
             if (cmd !== "ucinewgame" && cmd !== "flip" && cmd !== "stop" && cmd !== "ponderhit" && cmd.substr(0, 8) !== "position"  && cmd.substr(0, 9) !== "setoption") {
-				console.log("cmd: " + cmd)
-				console.log("cb: " + cb)
-				console.log("stram: " + stream)
+				//console.log("cmd: " + cmd)
+				//console.log("cb: " + cb)
+				//console.log("stram: " + stream)
                 que[que.length] = {
                     cmd: cmd,
                     cb: cb,
@@ -216,7 +217,7 @@
         
         engine.get_cue_len = function get_cue_len()
         {
-			console.log("get_cue_len")
+			//console.log("get_cue_len")
             return que.length;
         }
         
@@ -225,7 +226,10 @@
     
     
     
-   
+    function nextCal()
+	{
+		console.log("calculation complete!")
+	}
     function init()
     {
         evaler = load_engine();
