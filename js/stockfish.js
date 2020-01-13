@@ -229,6 +229,8 @@
     function nextCal()
 	{
 		console.log("calculation complete!")
+		evaler.send("position fen r2qkbnr/pb1p1ppp/1pn1p3/1B2P3/8/2Q2N2/PPP2PPP/RNB1K2R b KQkq - 0 1");
+        evaler.send("go depth 10");
 	}
     function init()
     {
@@ -236,12 +238,12 @@
         
         evaler.send("uci", function onuci(str)
         {
-			console.log("**** str: " +str)
+			//console.log("**** str: " +str)
             evaler.send("isready", function onready()
             {
                 
                 evaler.send("position fen 1rb1kbr1/pppp1p1p/4p1p1/7q/6Q1/8/PPPPP2P/RNBK3R w - -");
-                evaler.send("go depth 20");
+                evaler.send("go depth 10");
             });
         });
     }
