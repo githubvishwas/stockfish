@@ -1,139 +1,40 @@
-<!doctype html>
+
 <html>
   <head>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/chessboard-0.3.0.min.css" />
-    <script src="js/jquery-1.10.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/chess.min.js"></script>
-    <script src="js/chessboard-0.3.0.min.js"></script>
-    <title>Stockfish.js</title>
+    <title>Play with stockfish.</title>
+    <meta charset=utf-8>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+	<meta http-equiv='pragma' content='no-cache'>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		
+    <link href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAgdJREFUOMudUjtommEU/bv4GH9dfEGpzwpilPqgOlgLOiguatVBKUU6CC4ORdC1g4uiCA46iUuQDqKD2qF2aLvUQRMR+aGhL2Jt7ZCixFqT26tIEGNCmwPne95zv49zL0Fcj7tr3gh7yHdr7t00yaM1/x80Gk0uk8mOpFLpEZ1Ol/2L5jbyHpK93KC4NRqNYElcv1rHCJEaJLkpvCUWi/edTue3WCw2djgcn/HVOooOYQ2hUEjJ5fJeMBg8jsfjY7PZ/EUikTxfqblc7tN0On0CGxgMBucoOKlWq1AoFMBqtU4nk8lmCGCinxwO5zGBr72dzWawjeFwCEql8o9Go1nsup9Op4C/eE3g8HI8HsMuJJPJs1wud7brjqIoEIlE+wSTydS7XK7vi8XiUlC5XF5xG/P5HIxG41d04M7KBx6P98RkMh03m00Ih8OAhoLf74dAILCafT7f6iyTyUC32wWdTveRzWY/3C6jx2KxnPZ6PWi327A0MJ/PQ6lUglarBf1+H+r1OqBxPzCWv6sPLGq1+rfH44FEIgHFYhEajQZUKhXIZrMQjUbBZrMBn8//dFUj3Y9EIr9SqRR4vV5wu92A3lzMoVAIarUaKBSKg6sSqFgs1gSdP1+WaBudTgfsdvspSZKH17UzKRAInmEXvtFqtQcGg+GDXq+nVCrVeyz3CwaD8WBb8Bdzc4WHN/Zt7QAAAABJRU5ErkJggg==" type="image/png" rel="icon">
+    <link rel=stylesheet href="css/board.css">
+    <link rel=stylesheet href="css/kingdom.css">
+    <link rel=stylesheet href="css/moves_manager.css">
   </head>
   <body>
-    <div class="row">
-      <div class="col-sm-7 col-md-6">
-        <span class="h3" id="time1">0:05:00</span>
-        <div id="board" style="width: 400px"></div>
-        <span class="h3" id="time2">0:05:00</span>
-        <hr>
-        <div id="engineStatus">...</div>
-      </div>
-      <div class="col-sm-5 col-md-6">
-        <h3>Moves:</h3>
-        <div id="pgn"></div>
-        <hr>
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label for="timeBase" class="control-label col-xs-4 col-sm-6 col-md-4">Base time (min)</label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <input type="number" class="form-control" id="timeBase" value="5">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="timeInc" class="control-label col-xs-4 col-sm-6 col-md-4">Increment (sec)</label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <input type="number" class="form-control" id="timeInc" value="2">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="skillLevel" class="control-label col-xs-4 col-sm-6 col-md-4">Skill Level (0-20)</label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <input type="number" class="form-control" id="skillLevel" value="0">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="color" class="control-label col-xs-4 col-sm-6 col-md-4">I play</label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary active" id="color-white"><input type="radio" name="color">White</label>
-                <label class="btn btn-primary" id="color-black"><input type="radio" name="color">Black</label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="showScore" class="control-label col-xs-4 col-sm-6 col-md-4">Show score</label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <input type="checkbox" class="form-control" id="showScore" checked>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="color" class="control-label col-xs-4 col-sm-6 col-md-4"></label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <button type="button" class="btn btn-primary" onclick="newGame()">New Game</button>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="color" class="control-label col-xs-4 col-sm-6 col-md-4">Promote to</label>
-            <div class="col-xs-4 col-sm-6 col-md-4">
-              <select id=promote>
-                <option value=q selected>Queen</option>
-                <option value=r>Rook</option>
-                <option value=b>Bishop</option>
-                <option value=n>Knight</option>
-              </select>
-            </div>
-          </div>
-        </form>
-        <h5>Evaluation</h5>
-        <pre id=evaluation></pre>
-    </div>
-    <script src="enginegame.js"></script>
-    <script>
-      var wait_for_script;
-      var newGame = function (){};
-      
-      /// We can load Stockfish.js via Web Workers or directly via a <script> tag.
-      /// Web Workers are better since they don't block the UI, but they are not always avaiable.
-      (function fix_workers()
-      {
-        var script_tag;
-        /// Does the environment support web workers?  If not, include stockfish.js directly.
-        ///NOTE: Since web workers don't work when a page is loaded from the local system, we have to fake it there too. (Take that security measures!)
-        if (!Worker || (location && location.protocol === "file:")) {
-          var script_tag  = document.createElement("script");
-          script_tag.type ="text/javascript";
-          script_tag.src  = "stockfish.asm.js";
-          script_tag.onload = init;
-          document.getElementsByTagName("head")[0].appendChild(script_tag);
-          wait_for_script = true;
-          setTimeout(function ()
-          {
-            console.warn("Loading this example from the file: protocol will load the slower asm.js engine.\nRun server.js and then load http://localhost:8080/ for the WASM engine.");
-          }, 3000);
-        }
-      }());
-      
-      function init()
-      {
-        var game = engineGame();
-    
-        newGame = function newGame() {
-            var baseTime = parseFloat($('#timeBase').val()) * 60;
-            var inc = parseFloat($('#timeInc').val());
-            var skill = parseInt($('#skillLevel').val());
-            game.reset();
-            game.setTime(baseTime, inc);
-            game.setSkillLevel(skill);
-            game.setPlayerColor($('#color-white').hasClass('active') ? 'white' : 'black');
-            game.setDisplayScore($('#showScore').is(':checked'));
-            game.start();
-        }
-        
-        game.setSkillLevel
-        
-        document.getElementById("skillLevel").addEventListener("change", function ()
-        {
-            game.setSkillLevel(parseInt(this.value, 10));
-        });
-    
-        newGame();
-      }
-      
-      /// If we load Stockfish.js via a <script> tag, we need to wait until it loads.
-      if (!wait_for_script) {
-        document.addEventListener("DOMContentLoaded", init);
-      }
-    </script>
+      <p><span id="status" style="width: 250px">"Ver 17: "</span></p>
   </body>
+  <script src="js/girdle.js"></script>
+  <script src="js/font_fit.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/moves_manager.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script>
+	console.log("loading engine again!")
+	</script>
+  <script src="js/stockfish.js"></script>
 </html>
