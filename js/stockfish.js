@@ -106,10 +106,7 @@
                 bestmove = "",
                 my_que;
             console.log("onmessage: " + line);
-            if (line.substr(0, 8) === "depth 10") {
 
-				console.log("Computer eval score: " + line.split(/\b\s+/))
-			}
             /// Stream everything to this, even invalid lines.
             if (engine.stream) {
                 engine.stream(line);
@@ -149,10 +146,8 @@
                 /// isready
                 done = true;
                 engine.ready = true;
-			} else if (line.substr(0, 8) === "depth 10") {
-				console.log("score eval==");
-                console.log("==" + line);
-				console.log(line.split(/\b\s+/))
+			} else if (line.substr(0, 5) === "depth") {
+				console.log("*** Computer eval score: " + line.split(/\b\s+/));
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
                 done = true;
@@ -249,7 +244,7 @@
     function init()
     {
         
-        console.log("version 2 started")
+        console.log("version 3 started")
         evaler = load_engine();
         
         evaler.send("uci", function onuci(str)
@@ -263,36 +258,7 @@
             });
         });
     }
-    
-    
-    
-    
-    G.events.attach("move", function onmove(e)
-    {
-        var ply = game_history.length,
-            color;
-        
-        if (!pieces_moved) {
-            G.events.trigger("firstMove");
-            pieces_moved = true;
-        }
-        
-        /// player.last_move_time
-        ///NOTE: board.turn has already switched.
-        color = board.turn === "b" ? "w" : "b";
-        game_history[ply] = {move: e.uci, ponder: e.ponder, turn: board.turn, pos: cur_pos_cmd, color: color};
-        
-        if (board.players[color].has_time) {
-            game_history[ply].move_time = board.players[color].last_move_time;
-        }
-        prep_eval(cur_pos_cmd, ply);
-        moves_manager.add_move({color: color, san: e.san, time: game_history[ply].move_time, ply: ply - 1, scoll_to_bottom: true});
-    });
-    
-    G.events.attach("newGameBegins", function onmove(e)
-    {
-        moves_manager.reset_moves();
-    });
+
     
     init();
 }());
