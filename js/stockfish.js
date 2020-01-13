@@ -147,13 +147,15 @@
             
             if (done) {
                 if (my_que.cb && !my_que.discard) {
+					console.log("*** my_que.cb: " + my_que.cb)
+					console.log("*** my_que.message: " + my_que.message)
                     my_que.cb(my_que.message);
                 }
                 
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 9 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+                statusEl.html("Ver 10 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
                 //cal_done()
             }
         };
@@ -224,7 +226,7 @@
         
         evaler.send("uci", function onuci(str)
         {
-			
+			console.log("**** str: " +str)
             evaler.send("isready", function onready()
             {
                 
