@@ -1,0 +1,8 @@
+src/stockfish
+src/.depend
+*.o
+
+# Stockfish.js
+*~
+etc/
+merged_data.json
