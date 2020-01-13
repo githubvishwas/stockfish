@@ -176,10 +176,10 @@
             /// Only add a que for commands that always print.
             ///NOTE: setoption may or may not print a statement.
             if (cmd !== "ucinewgame" && cmd !== "flip" && cmd !== "stop" && cmd !== "ponderhit" && cmd.substr(0, 8) !== "position"  && cmd.substr(0, 9) !== "setoption") {
+				console.log("cmd: " + cmd)
+				console.log("cb: " + cb)
+				console.log("stram: " + stream)
                 que[que.length] = {
-					console.log("cmd: " + cmd)
-					console.log("cb: " + cb)
-					console.log("stram: " + stream)
                     cmd: cmd,
                     cb: cb,
                     stream: stream
