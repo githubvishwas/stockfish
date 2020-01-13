@@ -92,7 +92,7 @@
             }
             
             que_num = determine_que_num(line, que);
-            console.log("*** Queue num: " + que_num)
+            //console.log("*** Queue num: " + que_num)
 			
             my_que = que[que_num];
             
@@ -150,15 +150,15 @@
             
             if (done) {
                 if (my_que.cb && !my_que.discard) {
-					console.log("*** my_que.cb: " + my_que.cb)
-					console.log("*** my_que.message: " + my_que.message)
+					//console.log("*** my_que.cb: " + my_que.cb)
+					//console.log("*** my_que.message: " + my_que.message)
                     my_que.cb(my_que.message);
                 }
                 
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 if (line.substr(0, 8) === "bestmove") {
-					statusEl.html("Ver 12 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+					statusEl.html("Ver 13 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
 				} else {
 					statusEl.html("Calculating, please wait...");
 				}
