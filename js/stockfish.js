@@ -119,13 +119,14 @@
             
             que_num = determine_que_num(line, que);
             console.log("*** Queue num: " + que_num)
-			console.log("*** Computer eval score: " + line.split(/\b\s+/));
+			
             my_que = que[que_num];
             
             if (!my_que) {
                 return;
             }
-            
+			console.log("*** Computer eval score1: " + line.substr(0, 5));
+            console.log("*** Computer eval score2: " + line.split(/\b\s+/));
             if (my_que.stream) {
                 my_que.stream(line);
             }
