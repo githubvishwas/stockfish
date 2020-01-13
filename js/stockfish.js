@@ -153,16 +153,17 @@
 					//console.log("*** my_que.cb: " + my_que.cb)
 					//console.log("*** my_que.message: " + my_que.message)
                     my_que.cb(my_que.message);
+					 if (line.substr(0, 8) === "bestmove") {
+						statusEl.html("Ver 21 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
+						nextCal();
+					} else {
+						statusEl.html("Calculating, please wait...");
+					}
                 }
                 
                 /// Remove this from the que.
-                G.array_remove(que, que_num);
-                if (line.substr(0, 8) === "bestmove") {
-					statusEl.html("Ver 20 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
-					nextCal();
-				} else {
-					statusEl.html("Calculating, please wait...");
-				}
+                //G.array_remove(que, que_num);
+               
                 //cal_done()
             }
         };
