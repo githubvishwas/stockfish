@@ -4,7 +4,8 @@
 
     var evaler;
     
-
+	var current_comp_score = 0.0
+	var best_computer_move = ""
     var debugging = true;
 
     var statusEl = $('#status');
@@ -119,12 +120,14 @@
                 engine.ready = true;
 			} else if (line.substr(0, 13) === "info depth 10") {
 				console.log("*** Computer eval score: " + line.split(/\b\s+/)[9]/100.0);
+				current_comp_score = line.split(/\b\s+/)[9]/100.0
             } else if (line.substr(0, 8) === "bestmove") {
                 /// go [...]
                 done = true;
                 console.log("bestmove==");
                 console.log("==" + line);
                 bestmove = line.substr(9,4)
+				best_computer_move = bestmove
                 /// All "go" needs is the last line (use stream to get more)
                 my_que.message = line;
             } else if (my_que.cmd === "d" && line.substr(0, 15) === "Legal uci moves") {
@@ -150,7 +153,7 @@
                 /// Remove this from the que.
                 G.array_remove(que, que_num);
                 
-                statusEl.html("Ver 6 Best move is: " + bestmove);
+                statusEl.html("Ver 7 Best move is: " + best_computer_move + "\n Computer score: " + current_comp_score);
                 //cal_done()
             }
         };
