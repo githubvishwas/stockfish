@@ -105,7 +105,7 @@
                 que_num = 0,
                 bestmove = "",
                 my_que;
-            console.log("onmessage + "line);
+            console.log("onmessage: " + line);
             
             /// Stream everything to this, even invalid lines.
             if (engine.stream) {
