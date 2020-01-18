@@ -4,6 +4,9 @@ function engineGame(options) {
     var comp_eval_score = []
 	var curr_move_score = 0.0
 	var eval_depth = '10'
+	var game_fens = []
+	var fen_counter = 0
+	var move_turn = 'w'
     /// We can load Stockfish via Web Workers or via STOCKFISH() if loaded from a <script> tag.
     var engine = typeof STOCKFISH === "function" ? STOCKFISH() : new Worker(options.stockfishjs || 'stockfish.js');
     var evaler = typeof STOCKFISH === "function" ? STOCKFISH() : new Worker(options.stockfishjs || 'stockfish.js');
@@ -43,7 +46,7 @@ function engineGame(options) {
 		   comp_eval_score.push(curr_move_score)
 		   analyzePrevMove();
 		} else if(match = line.match(/^info .*\bscore (\w+) (-?\d+)/)) {
-			var score = parseInt(match[2]) * (game.turn() == 'w' ? 1 : -1);
+			var score = parseInt(match[2]) * (move_turn == 'w' ? 1 : -1);
 			/// Is it measuring in centipawns?
 			if(match[1] == 'cp') {
 				curr_move_score = (score / 100.0).toFixed(2);
@@ -54,18 +57,24 @@ function engineGame(options) {
 			
 			/// Is the score bounded?
 			if(match = line.match(/\b(upper|lower)bound\b/)) {
-				curr_move_score = ((match[1] == 'upper') == (game.turn() == 'w') ? '<= ' : '>= ') + engineStatus.score
+				curr_move_score = ((match[1] == 'upper') == (move_turn == 'w') ? '<= ' : '>= ') + engineStatus.score
 			}
 		}
             
             
     };
 	function analyzePrevMove() {	
-		var ret = game.undo()
-		if (ret != null) {
+		
+		if (fen_counter < game_fens.length) {
 			console.log("Analyzing fen: " + game.fen())
-			uciCmd('position fen '+game.fen());
-			uciCmd('position fen '+game.fen(), evaler);
+			uciCmd('position fen '+game_fens[fen_counter]);
+			uciCmd('position fen '+game_fens[fen_counter], evaler);
+			fen_counter = fen_counter + 1
+			if(move_turn == 'w') {
+				move_turn = 'b'
+			} else {
+				move_turn = 'w'
+			}
 			uciCmd('eval');
 			uciCmd('go depth ' + eval_depth);
 		} else {
@@ -106,13 +115,18 @@ function engineGame(options) {
 	var start = new Date().getTime()
 	var pgnmoves = game.history()
 	console.log(pgnmoves)
-	
+	var ret = game.undo()
+	while(ret != null) {
+		game_fens.push(game.fen())
+		ret = game.undo();
+	}
 	uciCmd('uci');
 	uciCmd('ucinewgame');
     uciCmd('isready');
-	console.log("Analyzing fen: " + game.fen())
-	uciCmd('position fen '+game.fen());
-    uciCmd('position fen '+game.fen(), evaler);
+	console.log("Analyzing fen: " + game_fens[fen_counter])
+	uciCmd('position fen '+game_fens[fen_counter]);
+    uciCmd('position fen '+game_fens[fen_counter], evaler);
 	uciCmd('eval');
+	fen_counter = fen_counter + 1
 	uciCmd('go depth '+ eval_depth);
 }
