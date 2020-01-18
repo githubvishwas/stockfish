@@ -3,7 +3,7 @@ function engineGame(options) {
     var game = new Chess();
     var comp_eval_score = []
 	var curr_move_score = 0.0
-	var eval_depth = '10'
+	var eval_depth = '20'
 	var game_fens = []
 	var fen_counter = 0
 	var move_turn = 'w'
@@ -107,7 +107,7 @@ function engineGame(options) {
         
         (which || engine).postMessage(cmd);
     }
-	
+	console.log("Version 1.0 loaded");
 	var bookRequest = new XMLHttpRequest();
 	bookRequest.open('GET', 'ProDeo.bin', true);
 	bookRequest.responseType = "arraybuffer";
