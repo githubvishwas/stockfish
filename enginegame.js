@@ -57,7 +57,7 @@ function engineGame(options) {
 			
 			/// Is the score bounded?
 			if(match = line.match(/\b(upper|lower)bound\b/)) {
-				curr_move_score = ((match[1] == 'upper') == (move_turn == 'w') ? '<= ' : '>= ') + engineStatus.score
+				curr_move_score = ((match[1] == 'upper') == (move_turn == 'w') ? '<= ' : '>= ') + curr_move_score
 			}
 		}
             
@@ -107,7 +107,7 @@ function engineGame(options) {
         
         (which || engine).postMessage(cmd);
     }
-	console.log("Version 1.0 loaded");
+	console.log("Version 2.0 loaded");
 	var bookRequest = new XMLHttpRequest();
 	bookRequest.open('GET', 'ProDeo.bin', true);
 	bookRequest.responseType = "arraybuffer";
