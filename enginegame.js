@@ -108,6 +108,14 @@ function engineGame(options) {
         (which || engine).postMessage(cmd);
     }
 	
+	var bookRequest = new XMLHttpRequest();
+	bookRequest.open('GET', 'ProDeo.bin', true);
+	bookRequest.responseType = "arraybuffer";
+	bookRequest.onload = function(event) {
+	  if(bookRequest.status == 200)
+		engine.postMessage({book: bookRequest.response});
+	};
+	bookRequest.send(null);
 	var pgnfiletext = document.getElementById('ms_word_filtered_html').value	
 	var games = pgnfiletext.split("[Event")
 	var game1 = "[Event" +games[1] 
@@ -120,6 +128,7 @@ function engineGame(options) {
 		game_fens.push(game.fen())
 		ret = game.undo();
 	}
+	
 	uciCmd('uci');
 	uciCmd('ucinewgame');
     uciCmd('isready');
